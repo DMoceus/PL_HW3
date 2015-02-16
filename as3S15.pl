@@ -1,8 +1,8 @@
 /*
       CS471 - Programming Languages
-        Assignment #<number> due: <DATE>
-        Author: <LastName>, <FirstName> (<EMail>)
-        Date: <DATE>
+        Assignment #3 due: 2/17/2015
+        Author: Morris, David (dmorris4@binghamton.edu)
+        Date: 2/16/2015
  */
 
 /* 
