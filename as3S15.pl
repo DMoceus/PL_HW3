@@ -233,7 +233,7 @@ isTree(node(_,A,B)) :- isTree(A),isTree(B).
 
 gcd(A,0,A).
 %gcd(A,B,GCD) :- A >= B , 0 is mod(A,B), GCD = B.
-gcd(A,B,GCD) :- gcd(B,A,GCD), A < B.
+gcd(A,B,GCD) :- A < B, gcd(B,A,G), GCD = G.
 gcd(A,B,GCD) :- A >= B ,Z is mod(A,B), gcd(B,Z,X), GCD = X.
 
 
