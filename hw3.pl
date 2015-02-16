@@ -40,14 +40,8 @@ i.e.
 
 numeral(0).
 numeral(succ(X)) :- numeral(X).
-/*
-convertToDecimal(0,0).
-convertToDecimal(succ(0),1).
-convertToDecimal(succ(X),Y) :- 
-convertToDecimal(X,Y) :- Z is Y-1, succ(N) = X, convertToDecimal(N,Z).
-*/
 
-%convertToDecimal(0,0).
+convertToDecimal(0,0).
 convertToDecimal(succ(0),1).
 convertToDecimal(X,Y) :- succ(N) = X, convertToDecimal(N,Z), Y is Z+1.
 
@@ -113,7 +107,7 @@ add(succ(A),succ(B),succ(succ(C))) :- add(A,B,C).
   */
 
 equLen([],[]).
-equLen([A|C],[B|C]) :- A=B, equLen(C,C).
+equLen([A|C],[A|C]) :- equLen(C,C).
 
 
 
@@ -142,7 +136,7 @@ origin(point(0,0)).
       false.
 */
 
-
+collinear(point(X1,Y1),point(X2,Y2),point(X3,Y3)) :- A = B , A is (X1-X2)*(Y2-Y3), B is (Y1-Y2)*(X2-X3).
 
 /* 7: Define the "prefix" predicate so that "prefix(X,Y)" says that 
       X is a list that is a prefix of Y.  That is, each element of X 
@@ -160,6 +154,8 @@ origin(point(0,0)).
        No
 */
 
+prefix([],_).
+prefix([A|T],[A|V]) :- prefix(T,V).
 
 /* 8: Define a predicate hasSubseq(L,S), such that it succeeds if the list L 
       contains the list S as a sub-sequence of equivalent items. 
@@ -176,6 +172,9 @@ origin(point(0,0)).
       
    */
 
+hasSubseq(_,[]).
+hasSubseq([A|T],[A|V]) :- hasSubseq(T,V).
+hasSubseq([_|T],[B|V]) :- hasSubseq(T,[B|V]).
 
 
 /* 9: For this problem we define a binary tree as:
@@ -205,6 +204,9 @@ tree4(NotTree):- NotTree= node(a, empty, node(x ,node(b, node(c,empty,empty), no
 tree5(NotTree):-NotTree= node(a, empty, node(x, node(b, node(c, empty, empty), node(d, empty, empty))), empty).
 tree6(Tree6):- Tree6 = node(a, node(b, empty,empty), node(c, node(d,empty,empty),node(e,empty,empty) )).
 
+isTree(empty).
+isTree(node(_,A,B)) :- isTree(A),isTree(B).
+
 
 
 /* 10: Here is a recursive mathematical definition of gcd (Greatest Common Divisors)
@@ -229,10 +231,21 @@ tree6(Tree6):- Tree6 = node(a, node(b, empty,empty), node(c, node(d,empty,empty)
 
 */
 
+gcd(A,0,A).
+%gcd(A,B,GCD) :- A >= B , 0 is mod(A,B), GCD = B.
+gcd(A,B,GCD) :- gcd(B,A,GCD), A < B.
+gcd(A,B,GCD) :- A >= B ,Z is mod(A,B), gcd(B,Z,X), GCD = X.
 
 
 /* 11: Using the definition of Ackermann's functions as defined homework 1 (problem 6),
  *     write a Prolog predicate ack(M, N, A).  Note A will unify with the 
  *     Ackermann's value for M and N.   
 */
+
+ack(0,N,A) :- A is N*2.
+ack(M,0,A) :- M > 0, A is 0.
+ack(M,1,A) :- M > 0, A is 2.
+ack(M,N,A) :- X is M-1, Y is N-1, ack(M,Y,Z), ack(X,Z,A).
+
+
 
